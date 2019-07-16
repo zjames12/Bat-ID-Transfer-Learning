@@ -1,0 +1,342 @@
+---
+title: "bat_deep_learning"
+output:
+ # pdf_document: default
+  github_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+#####install packages
+```{r packages, echo=FALSE}
+pkgTest <- function(x)
+{
+  if (x %in% rownames(installed.packages()) == FALSE) {
+    install.packages(x, dependencies= TRUE,repos="http://cran.r-project.org")    
+  }
+  library(x, character.only = TRUE)
+}
+neededPackages <- c("raster", "dplyr", "sp", "magick","reticulate"
+                    )
+for (package in neededPackages){pkgTest(package)}
+
+library(keras)
+#install_keras(tensorflow="default")
+
+```
+
+```{r}
+library(keras)
+# library(raster)
+# library(dplyr)
+library(sp)
+library(magick)
+library(reticulate)
+```
+
+
+### move bat jpgs to folders
+```{r move_to_folders}
+
+do.call(file.remove,list(list.files("all_image/train/",full.names = TRUE)))
+
+d<-getwd()
+bat_images<-list.files(path="all_image/fruit_bat")
+
+file_counter=1
+
+for (i in bat_images) {
+  # print (i)
+  bat<-image_read(paste0("all_image/fruit_bat/",i))
+  image_write(image=bat,path=paste0("all_image/train/","bat",".",file_counter,".jpg"),format="jpg")
+  file_counter=file_counter+1
+}
+#<-read_image
+
+```
+
+### move no_bat jpgs to folders
+```{r move no_bat}
+d<-getwd()
+bat_images<-list.files(path="all_image/no_bat")
+
+file_counter=1
+
+for (i in bat_images) {
+  # print (i)
+  bat<-image_read(paste0("all_image/no_bat/",i))
+  image_write(image=bat,path=paste0("all_image/train/","no_bat",".",file_counter,".jpg"),format="jpg")
+  file_counter=file_counter+1
+}
+
+```
+
+### assign file names to pics bats vs. no bats
+```{r file_names}
+original_dataset_dir<-("all_image/train")
+base_dir<-("all_image/small")
+dir.create(base_dir)
+
+train_dir <- file.path(base_dir, "train")
+dir.create(train_dir)
+validation_dir <- file.path(base_dir, "validation")
+dir.create(validation_dir)
+test_dir <- file.path(base_dir, "test")
+dir.create(test_dir)
+
+train_bat_dir <- file.path(train_dir, "bat")
+dir.create(train_bat_dir)
+
+train_no_bat_dir <- file.path(train_dir, "no_bat")
+dir.create(train_no_bat_dir)
+
+validation_bat_dir <- file.path(validation_dir, "bat")
+dir.create(validation_bat_dir)
+
+validation_no_bat_dir <- file.path(validation_dir, "no_bat")
+dir.create(validation_no_bat_dir)
+
+test_bat_dir <- file.path(test_dir, "bat")
+dir.create(test_bat_dir)
+
+test_no_bat_dir <- file.path(test_dir, "no_bat")
+dir.create(test_no_bat_dir)
+
+
+
+fnames <- paste0("bat.", 1:14336, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames), 
+          file.path(train_bat_dir),overwrite = TRUE) 
+
+fnames <- paste0("bat.",14336:18432, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames), 
+          file.path(validation_bat_dir),overwrite = TRUE)
+
+fnames <- paste0("bat.", 18432:20481, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames),
+          file.path(test_bat_dir),overwrite = TRUE)
+
+fnames <- paste0("no_bat.", 1:13225, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames),
+          file.path(train_no_bat_dir),overwrite = TRUE)
+
+fnames <- paste0("no_bat.", 13225:17003, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames),
+          file.path(validation_no_bat_dir),overwrite = TRUE) 
+
+fnames <- paste0("no_bat.", 17003:18893, ".jpg")
+file.copy(file.path(original_dataset_dir, fnames),
+          file.path(test_no_bat_dir),overwrite = TRUE)
+
+```
+
+
+```{r}
+original_dataset_dir<-("all_image/train")
+base_dir<-("all_image/small")
+
+train_dir <- file.path(base_dir, "train")
+validation_dir <- file.path(base_dir, "validation")
+test_dir <- file.path(base_dir, "test")
+
+train_bat_dir <- file.path(train_dir, "bat")
+
+train_no_bat_dir <- file.path(train_dir, "no_bat")
+
+validation_bat_dir <- file.path(validation_dir, "bat")
+
+validation_no_bat_dir <- file.path(validation_dir, "no_bat")
+
+test_bat_dir <- file.path(test_dir, "bat")
+
+test_no_bat_dir <- file.path(test_dir, "no_bat")
+
+```
+
+##read in vgg16 -- https://jjallaire.github.io/deep-learning-with-r-notebooks/notebooks/5.3-using-a-pretrained-convnet.nb.htmls
+```{r vgg}
+library(keras)
+conv_base <- application_vgg16(
+  weights = "imagenet",
+  include_top = FALSE,
+  input_shape = c(150, 150, 1)#comment this out so that we can use images of different size
+)
+```
+##unfreeze weights from block 3 so that rest of conv_base can be fine-tuned
+```{r unfreeze}
+unfreeze_weights(conv_base, from = "block3_conv1")
+```
+
+##add dense layers to conv_base
+```{r dense}
+model <- keras_model_sequential() %>% 
+  conv_base %>% 
+  layer_flatten() %>% 
+  layer_dense(units = 256, activation = "relu") %>% 
+  #layer_batch_normalization()%>%
+    #layer_dropout(0.5) %>%
+
+  layer_dense(units = 1, activation = "sigmoid")
+```
+
+##make image_data_generator that does image augmentation
+```{r augment}
+train_datagen = image_data_generator(
+  rescale = 1/255,
+  rotation_range = 40,
+  width_shift_range = 0.2,
+  height_shift_range = 0.2,
+  shear_range = 0.2,
+  zoom_range = 0.2,
+  horizontal_flip = TRUE,
+  fill_mode = "nearest"
+  
+)
+
+
+test_datagen <- image_data_generator(rescale = 1)
+train_generator <- flow_images_from_directory(
+  train_dir,
+  train_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+validation_generator <- flow_images_from_directory(
+  validation_dir,
+  test_datagen,
+  target_size = c(150, 150),
+  batch_size = 20,
+  class_mode = "binary"
+)
+```
+
+##fit the model
+```{r fit}
+model %>% compile(
+  loss = "binary_crossentropy",
+  optimizer = optimizer_rmsprop(lr = 1e-5),
+  metrics = c("accuracy")
+)
+history <- model %>% fit_generator(
+  train_generator,
+  steps_per_epoch = 100,
+  epochs =20,
+  validation_data = validation_generator,
+  validation_steps = 50
+)
+```
+
+##save the model
+```{r save}
+save_model_hdf5(model,"deep_learning_bats.h5")
+```
+
+##plot accuracy and loss for training and validation
+```{r plot_accuracy}
+plot(history)
+```
+
+##load the model
+```{r load}
+model<-load_model_hdf5("deep_learning_bats.h5", custom_objects = NULL, compile = TRUE)
+```
+##rename files in random_bat_pictures folder
+```{r rename_test}
+num_files = length(list.files("all_image/random_bat_pictures/folder"))
+print(num_files)
+file_rename_list = paste0(seq(from = 1, to = num_files), ".jpg")
+subdirName = "all_image/random_bat_pictures/folder"
+oldNames = list.files(subdirName)
+file.rename(from = file.path(subdirName, oldNames), to = file.path(subdirName, file_rename_list))
+
+#file.rename(list.files("all_image/random_bat_pictures/folder"),  file_rename_list)
+list.files("all_image/random_bat_pictures/folder")
+```
+
+
+##make predictions in R
+```{r predictions}
+train_datagen = image_data_generator(
+  rescale = 1/255,
+  rotation_range = 40,
+  width_shift_range = 0.2,
+  height_shift_range = 0.2,
+  shear_range = 0.2,
+  zoom_range = 0.2,
+  horizontal_flip = TRUE,
+  fill_mode = "nearest"
+)
+
+#train_datagen = image_data_generator(
+#  rescale = 1/255
+#)
+
+
+#get data from https://www.kaggle.com/c/dogs-vs-cats/data. Put eight image into folder test1image
+test_dir<-"all_image/random_bat_pictures"
+
+test_generator <- flow_images_from_directory(
+  test_dir,                  # Target directory  
+  train_datagen,              # Data generator
+  target_size = c(150, 150),  # Resizes all images to 150 × 150
+  batch_size = 1,
+  class_mode = "binary",
+  shuffle = FALSE# binary_crossentropy loss for binary labels
+)
+
+num_test_images = 29
+y <- predict_generator(model, test_generator, steps=num_test_images, 
+                       verbose =1)
+y
+summary(y)
+
+```
+
+##view all the images with values close to 0 
+```{r}
+indicesNoBatPrediction = which(y < 0.5)
+subdirName = "all_image/random_bat_pictures/folder/"
+
+fileNames = list.files("all_image/random_bat_pictures/folder/")
+for (image in 1:length(indicesNoBatPrediction) ){
+  fileNameOne = paste0(subdirName,
+                     fileNames[indicesNoBatPrediction[image]])
+  print(fileNameOne)
+  r <- raster(fileNameOne)
+  plot(r, col = gray.colors(10, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL))
+}
+#probas_to_classes(y) function not found
+
+```
+
+
+###now plot images with values close to 1
+```{r images_close_to_1}
+##view all the images with values close to 0 
+indicesPrediction1 = which(y >= 0.5)
+subdirName = "all_image/random_bat_pictures/folder/"
+
+fileNames = list.files("all_image/random_bat_pictures/folder/")
+for (image in 1:length(indicesPrediction1) ){
+  fileNameOne = paste0(subdirName,
+                     fileNames[indicesPrediction1[image]])
+  print(fileNameOne)
+  r <- raster(fileNameOne)
+  plot(r, col = gray.colors(10, start = 0.3, end = 0.9, gamma = 2.2, alpha = NULL))
+}
+
+```
+
+
+##make predictions in Python
+###first import keras -- nope, doesn't work to import keras
+```{r}
+py_module_available(keras)
+py_module_available(numpy)
+#keras = import(keras)
+```
+
