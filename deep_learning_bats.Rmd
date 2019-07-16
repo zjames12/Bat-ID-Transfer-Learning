@@ -162,7 +162,7 @@ library(keras)
 conv_base <- application_vgg16(
   weights = "imagenet",
   include_top = FALSE,
-  input_shape = c(150, 150, 1)#comment this out so that we can use images of different size
+  input_shape = c(150, 150, 3)#comment this out so that we can use images of different size
 )
 ```
 ##unfreeze weights from block 3 so that rest of conv_base can be fine-tuned
