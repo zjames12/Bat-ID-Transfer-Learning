@@ -8,10 +8,7 @@ from presaved weighs.
 ### Set Up
 
 1. Download Anaconda: https://www.anaconda.com/distribution/#download-section
-2. Install OpenCV by opening Anaconda Navigator and entering:
-```
-		pip install opencv-python
-```
+2. Install OpenCV by opening Anaconda Navigator and entering: ```pip install opencv-python```
 ### Train the model
 
 1. Clone this repository
@@ -20,7 +17,7 @@ from presaved weighs.
 same directory as this repository.
 3. Distribute the labeled bat images among the bat folders and the no bat images
 among the no bat folders. [how to distribute?]
-4. Run kaggle.ipynb (Make sure to have OpenCV installed)
+4. Run kaggle.ipynb
 
 ### Make predictions (After training model)
 
@@ -41,7 +38,7 @@ folder.
 
 Upload images in zipped folders. Add the following lines of code to unzip:[add steps, colab as alt]
 
-	!unzip file_name
+	```!unzip file_name```
 
 ## Code Overview
 
