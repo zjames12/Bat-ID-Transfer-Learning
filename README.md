@@ -15,7 +15,8 @@ This model is currently reporting validation accuracy of 90%. Since bat images a
 
 ## predictor.ipynb
 
-This file makes predictions from pre-saved weights. It is still begin worked on.
+This file makes predictions from pre-saved weights. Weights and bias should
+be saved in a csv file.
 
 ## rename_by_number.py
 
