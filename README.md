@@ -29,6 +29,18 @@ number.
 
 ## Other Approaches
 
+Several different methods were used to create a classifier. The code for each of these methods is included in this repo.
+
+### CNN from Transfer Learning
+
+This method used the pretrained vgg16 ML architecture. The top level was unfrozen
+and retrained on the bat dataset. This model saw an accuracy of 83%.
+
+### CNN from Scratch
+
+Here, a convolutional neural net was trained from scratch. It reproted an accuracy
+of 75%
+
 ## Contact
 
 This code was developed by Zachary James, Illya Fischoff, and Tao Huang of the Han Lab at the Cary Institute of Ecosystem Studies in Millbrook, New York.
