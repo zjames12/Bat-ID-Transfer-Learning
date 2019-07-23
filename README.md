@@ -9,8 +9,9 @@ from presaved weighs.
 
 1. Download Anaconda: https://www.anaconda.com/distribution/#download-section
 2. Install OpenCV by opening Anaconda Navigator and entering:
-	pip install opencv-python
-
+```
+		pip install opencv-python
+```
 ### Train the model
 
 1. Clone this repository
