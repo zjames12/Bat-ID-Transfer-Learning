@@ -1,9 +1,9 @@
 # Binary Logistic Classification of Bat Images
 
-This model determines whether an image contains a bat. It can be trained to create
-a new model or it can be run with a presaved model. If you want to load and run a
+This model determines whether an image contains a bat. It can be trained from
+scratch to create a new model or it can be run with saved weights. If you want to load and run a
 model (which should have been saved as two csv files), read the "Make Predictions"
-section.
+section. The following instructions are for Windows.
 
 ## How to Run the Code
 
@@ -15,7 +15,7 @@ section.
 4. Install tqdm by entering: `pip install tqdm`
 5. Download git: https://git-scm.com/downloads
 6. Open the command line by hitting the Windows key <kbd>⊞</kbd> and searching cmd
-7. Clone this repository by opening terminal and running: `git clone https://github.com/zjames12/Bat-ID-Transfer-Learning.git`
+7. Clone this repository by entering: `git clone https://github.com/zjames12/Bat-ID-Transfer-Learning.git`
 
 ### Train the model
 
@@ -25,13 +25,19 @@ section.
 same directory as this repository.
 4. Distribute the labeled bat images among the bat folders and the no bat images
 among the no bat folders. [how to distribute?]
-5. Run kaggle.ipynb
+5. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+6. Open Jupyter Notebook by entering `jupyter notebook`
+7. Open and run kaggle.ipynb in Jupyter Notebook
 
 ### Make Predictions
+
 1. Create two folders: prediction_images and bat_select
 2. Move unlabeled images to prediction_images folder
-3. Run rename_by_number.py
-4. Run prediction.ipynb. Bat images will be moved to the bat_select
+3. Open Spyder by hitting the Windows key <kbd>⊞</kbd> and searching for Spyder
+4. Open and run rename_by_number.py in Spyder
+5. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+6. Open Jupyter Notebook by entering `jupyter notebook`
+7. Open and run prediction.ipynb in Jupyter Notebook. Bat images will be moved to the bat_select
 folder.
 
 ### Running in Google Colab
