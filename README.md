@@ -1,3 +1,5 @@
+[![License: MIT](https://img.shields.io/badge/license-Proprietary-yellow.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
+
 # Binary Logistic Classification of Bat Images
 
 This model determines whether an image contains a bat. It can be trained from
