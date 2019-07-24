@@ -1,4 +1,4 @@
-[![License: MIT](https://img.shields.io/badge/license-Proprietary-yellow.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
 
 # Binary Logistic Classification of Bat Images
 
