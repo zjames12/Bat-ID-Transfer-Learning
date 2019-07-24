@@ -1,33 +1,33 @@
 # Binary Logistic Classification of Bat Images
 
-This model determines whether an image contains a bat. It can be trained or run from
-from presaved weighs.
+This model determines whether an image contains a bat. It can be trained to create
+a new model or it can be run with a presaved model. If you want to load and run a
+model (which should have been saved as two csv files), read the "Make Predictions"
+section.
 
 ## How to Run the Code
 
 ### Set Up
 
 1. Download Anaconda: https://www.anaconda.com/distribution/#download-section
-2. Install OpenCV by opening Anaconda Navigator and entering: ```pip install opencv-python```
+2. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+3. Install OpenCV by entering: `pip install opencv-python`
+4. Install tqdm by entering: `pip install tqdm`
+5. Download git: https://git-scm.com/downloads
+6. Open the command line by hitting the Windows key <kbd>⊞</kbd> and searching cmd
+7. Clone this repository by opening terminal and running: `git clone https://github.com/zjames12/Bat-ID-Transfer-Learning.git`
+
 ### Train the model
 
-1. Clone this repository
-2. Download and unzip the labeled images from Google Drive
-2. Create four folders: bat_train, no_bat_train, bat_test, and no_bat_test in the
+1. Download labeled images (bats.zip and no_bat.zip) from Google Drive
+2. Unzip the two folders
+3. Create four folders: bat_train, no_bat_train, bat_test, and no_bat_test in the
 same directory as this repository.
-3. Distribute the labeled bat images among the bat folders and the no bat images
+4. Distribute the labeled bat images among the bat folders and the no bat images
 among the no bat folders. [how to distribute?]
-4. Run kaggle.ipynb
+5. Run kaggle.ipynb
 
-### Make predictions (After training model)
-
-1. Create two folders: prediction_images and bat_select
-2. Move unlabeled images to prediction_images folder
-3. Run rename_by_number.py
-4. Continue running kaggle.ipynb. Bat images will be moved to the bat_select
-folder
-
-### Make Predictions (Loading saved weights)
+### Make Predictions
 1. Create two folders: prediction_images and bat_select
 2. Move unlabeled images to prediction_images folder
 3. Run rename_by_number.py
@@ -36,32 +36,40 @@ folder.
 
 ### Running in Google Colab
 
-Upload images in zipped folders. Add the following lines of code to unzip:[add steps, colab as alt]
+The training code can also be run in the cloud if you are familiar with Google Colab: https://colab.research.google.com
+Simply upload the images in zipped folders. Add the following lines of code to unzip.
 
-	```!unzip file_name```
+	!unzip bat_train.zip
+	!unzip no_bat_train.zip
+	!unzip bat_test.zip
+	!unzip no_bat_test.zip
 
 ## Code Overview
 
 ### kaggle.ipynb
 
-This file trains a logistic classifier. The training pictures should be located in the bat_train and no_bat_train folders. The validation images should be located in the bat_test and no_bat_test folders. After training the classifier can make predictions for unlabeled images. Unlabeled images should be located in the predictions_images folder. The model will identify bat images and move them to the bat_select folder.
+This file trains a logistic classifier. After training the model is saved in two
+csv files. The weights.csv contains the model weights. The bias.csv contains the
+constant value in the model
 
-This model is currently reporting validation accuracy of 90%. Since bat images are relatively rare, expect to see a large number of false positives.
+This model is currently reporting validation accuracy of 90%. Since bat images are
+relatively rare, we see a large number of false positives.
 
 ### predictor.ipynb
 
-This file makes predictions from pre-saved weights. Weights and bias should
-be saved in a csv file.
+This file makes predictions the from pre-saved weights. Weights and bias should
+be saved in two csv files.
 
 ### rename_by_number.py
 
 This script is provided as an organization tool. It must be run on images before
 they are used to make predictions. The script renames each image with a unique
-number.b
+number.
 
 ## Other Approaches
 
-Several different methods were used to create a classifier. The code for each of these methods is included in this repo.
+Several different methods were used to create a classifier. The code for each of
+ these methods is included in this repo.
 
 ### CNN from Transfer Learning
 
@@ -75,4 +83,4 @@ of 75%
 
 ## Contact
 
-This code was developed by Zachary James, Illya Fischoff, and Tao Huang of the Han Lab at the Cary Institute of Ecosystem Studies in Millbrook, New York.
+This code was developed by Zachary James, Illya Fischoff, and Tao Huang of the Han Lab at the Cary Institute of Ecosystem Studies in Millbrook, New York. For questions contact Dr. Barbara Han, hanb@caryinstitute.org
