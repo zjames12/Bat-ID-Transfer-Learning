@@ -23,13 +23,11 @@ section. The following instructions are for Windows.
 
 1. Download labeled images (bats.zip and no_bat.zip) from Google Drive
 2. Unzip the two folders
-3. Create four folders: bat_train, no_bat_train, bat_test, and no_bat_test in the
-same directory as this repository.
-4. Distribute the labeled bat images among the bat folders and the no bat images
-among the no bat folders. [how to distribute?]
+3. Create two folders: bat_train and no_bat_train in the same directory as this repository.
+4. Place the bat and no bat images in the corresponding folders.
 5. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
 6. Open Jupyter Notebook by entering `jupyter notebook`
-7. Open and run kaggle.ipynb in Jupyter Notebook
+7. Open and run train_model.ipynb in Jupyter Notebook
 
 ### Make Predictions
 
@@ -54,13 +52,13 @@ Simply upload the images in zipped folders. Add the following lines of code to u
 
 ## Code Overview
 
-### kaggle.ipynb
+### train_model.ipynb
 
 This file trains a logistic classifier. After training the model is saved in two
 csv files. The weights.csv contains the model weights. The bias.csv contains the
 constant value in the model
 
-This model is currently reporting validation accuracy of 90%. Since bat images are
+This model is currently reporting validation accuracy of 91%. Since bat images are
 relatively rare, we see a large number of false positives.
 
 ### predictor.ipynb
