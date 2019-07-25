@@ -1,5 +1,5 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
-
+[![HitCount](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning.svg)](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning)
 # Binary Logistic Classification of Bat Images
 
 This model determines whether an image contains a bat. It can be trained from
@@ -88,5 +88,7 @@ Here, a convolutional neural net was trained from scratch. It reported an accura
 of 75%
 
 ## Contact
+
+![alt text](https://www.caryinstitute.org/sites/default/themes/siteskin/logo.png "Logo Title Text 1")
 
 This code was developed by Zachary James, Illya Fischoff, and Tao Huang of the Han Lab at the Cary Institute of Ecosystem Studies in Millbrook, New York. For questions contact Dr. Barbara Han, hanb@caryinstitute.org
