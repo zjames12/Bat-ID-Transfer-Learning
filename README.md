@@ -12,12 +12,14 @@ section. The following instructions are for Windows.
 ### Set Up
 
 1. Download Anaconda: https://www.anaconda.com/distribution/#download-section
-2. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
-3. Install OpenCV by entering: `pip install opencv-python`
-4. Install tqdm by entering: `pip install tqdm`
-5. Download git: https://git-scm.com/downloads
-6. Open the command line by hitting the Windows key <kbd>⊞</kbd> and searching cmd
-7. Clone this repository by entering: `git clone https://github.com/zjames12/Bat-ID-Transfer-Learning.git`
+2. Install packages
+	a. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+	b. Install OpenCV by entering: `pip install opencv-python`
+	c. Install tqdm by entering: `pip install tqdm`
+3. Download the code
+	a. Download git: https://git-scm.com/downloads
+	b. Open the command line by hitting the Windows key <kbd>⊞</kbd> and searching cmd
+	c. Clone this repository by entering: `git clone https://github.com/zjames12/Bat-ID-Transfer-Learning.git`
 
 ### Train the model
 
@@ -25,19 +27,22 @@ section. The following instructions are for Windows.
 2. Unzip the two folders
 3. Create two folders: bat_train and no_bat_train in the same directory as this repository.
 4. Place the bat and no bat images in the corresponding folders.
-5. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
-6. Open Jupyter Notebook by entering `jupyter notebook`
-7. Open and run train_model.ipynb in Jupyter Notebook
+5. Run the model
+	a. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+	b. Open Jupyter Notebook by entering `jupyter notebook`
+	c. Open and run train_model.ipynb in Jupyter Notebook
 
 ### Make Predictions
 
 1. Create two folders: prediction_images and bat_select
 2. Move unlabeled images to prediction_images folder
-3. Open Spyder by hitting the Windows key <kbd>⊞</kbd> and searching for Spyder
-4. Open and run rename_by_number.py in Spyder
-5. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
-6. Open Jupyter Notebook by entering `jupyter notebook`
-7. Open and run prediction.ipynb in Jupyter Notebook. Bat images will be moved to the bat_select
+3. Rename the files
+	a. Open Spyder by hitting the Windows key <kbd>⊞</kbd> and searching for Spyder
+	b. Open and run rename_by_number.py in Spyder
+4. Run the predictions
+	a. Open Anaconda Prompt by hitting the Windows key <kbd>⊞</kbd> and searching for Anaconda Prompt
+	b. Open Jupyter Notebook by entering `jupyter notebook`
+	c. Open and run prediction.ipynb in Jupyter Notebook. Bat images will be moved to the bat_select
 folder.
 
 ### Running in Google Colab
