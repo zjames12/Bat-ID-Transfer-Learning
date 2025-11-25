@@ -1,11 +1,15 @@
+## ⚠️ Repository Status: No Longer Maintained
+
+**This repository is no longer maintained.**  
+Issues and pull requests may not be reviewed.  
+Feel free to fork the project if you find it useful.
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
-[![HitCount](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning.svg)](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning)
+<!-- [![HitCount](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning.svg)](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning) -->
 # Binary Logistic Classification of Bat Images
 
-This model determines whether an image contains a bat. It can be trained from
+This model determines whether a camera trap image contains a fruit bat. It can be trained from
 scratch to create a new model or it can be run with saved weights. If you want to load and run a
-model (which should have been saved as two csv files), read the "Make Predictions"
-section. The following instructions are for Windows.
+model, read the "Make Predictions" section. The following instructions are for Windows.
 
 ## How to Run the Code
 
@@ -59,23 +63,20 @@ Simply upload the images in zipped folders. Add the following lines of code to u
 
 ### train_model.ipynb
 
-This file trains a logistic classifier. After training the model is saved in two
-csv files. The weights.csv contains the model weights. The bias.csv contains the
-constant value in the model
+This file trains the classifier. After training the model weights are saved.
 
 This model is currently reporting validation accuracy of 91%. Since bat images are
 relatively rare, we see a large number of false positives.
 
 ### predictor.ipynb
 
-This file makes predictions the from pre-saved weights. Weights and bias should
-be saved in two csv files.
+This file makes predictions from pre-saved weights.
 
 ### rename_by_number.py
 
 This script is provided as an organization tool. It must be run on images before
 they are used to make predictions. The script renames each image with a unique
-number.
+id.
 
 ## Other Approaches
 
@@ -94,6 +95,7 @@ of 75%
 
 ## Contact
 
-![alt text](https://www.caryinstitute.org/sites/default/themes/siteskin/logo.png "Logo Title Text 1")
+<!-- ![alt text](https://www.caryinstitute.org/sites/default/themes/siteskin/logo.png "Logo Title Text 1") -->
+![logo](/assets/logo.png)
 
 This code was developed by Zachary James, Illya Fischoff, and Tao Huang of the Han Lab at the Cary Institute of Ecosystem Studies in Millbrook, New York. For questions contact Dr. Barbara Han, hanb@caryinstitute.org
