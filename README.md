@@ -3,7 +3,7 @@
 **This repository is no longer maintained.**  
 Issues and pull requests may not be reviewed.  
 Feel free to fork the project if you find it useful.
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg)
+<!-- [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://img.shields.io/badge/license-MIT-blue.svg) -->
 <!-- [![HitCount](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning.svg)](http://hits.dwyl.io/zjames12/Bat-ID-Transfer-Learning) -->
 # Binary Logistic Classification of Bat Images
 
